@@ -1,0 +1,31 @@
+server:
+  hostname: localhost
+  port: 1717
+
+security:
+  jwtsigningkey: XXXXXX
+  enablefaker: false
+
+database:
+  type: mysql
+  user: root
+  password: 19961711subzero
+  hostname: localhost
+  port: 3306
+  name: niet
+
+cors:
+  origins:
+    - chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop
+    - http://127.0.0.1:3250
+    - http://localhost:3250
+  headers:
+    - Content-Type
+    - Authorization
+
+mailing:
+  accesskeyid: AKIAXXXXXX
+  secretaccesskey: XXXXXX
+  awsregion: eu-west-1
+  fromemail: email
+  enabletestmailer: true
