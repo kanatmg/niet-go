@@ -10,7 +10,6 @@ const mainConfigDefaultFileName = "config.yml"
 
 var mainConfig configuration
 
-
 func C() configuration {
 	return mainConfig
 }

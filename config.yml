@@ -1,6 +1,6 @@
 server:
   hostname: localhost
-  port: 1717
+  port: 9299
 
 security:
   jwtsigningkey: XXXXXX
@@ -8,8 +8,8 @@ security:
 
 database:
   type: mysql
-  user: root
-  password: 19961711subzero
+  user: furdiegang
+  password: furdiegang
   hostname: localhost
   port: 3306
   name: niet

@@ -1,21 +1,16 @@
 package main
 
 import (
-    //"net/http"
-    log "github.com/sirupsen/logrus"
-    "github.com/kanatmg/niet-go/config"
-     _ "github.com/go-sql-driver/mysql"
-    "github.com/kanatmg/niet-go/pkg/server"
-
+	//"net/http"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/kanatmg/niet-go/pkg/server"
+	log "github.com/sirupsen/logrus"
 )
 
 func main() {
-
-    log.SetLevel(log.DebugLevel)
-    log.Info("Juregin Niet'ke tolsin ;-)")
-    log.Info(config.C().ListenAddr())
-    s := server.S()
-    s.Initialize()
-    s.Start()
-    log.Info("Bye!")
+	log.Info("Juregin Niet'ke tolsin ;-)")
+	s := server.S()
+	s.Initialize()
+	s.Start()
+	log.Info("Bye!")
 }
