@@ -8,8 +8,8 @@ security:
 
 database:
   type: mysql
-  user: furdiegang
-  password: furdiegang
+  user: root
+  password: 19961711subzero
   hostname: localhost
   port: 3306
   name: niet

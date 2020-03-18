@@ -26,10 +26,14 @@ func (s *server) Initialize() {
 }
 
 func (s *server) setRouters() {
-	//s.Get("/?{offset}",s.handleRequest(handler.GetShopById))
-	s.Router.HandleFunc("/shops", s.handleRequest(handler.GetShops)).
-		Queries("page", "{page}").Methods("GET")
+	s.Get("/shops", s.handleRequest(handler.GetShops))
+	s.Query("/shops","page","{page}",s.handleRequest(handler.GetShops))
+	//s.Router.HandleFunc("/shops", s.handleRequest(handler.GetShops)).
+	//	Queries("page", "{page}").Methods("GET")
 	s.Get("/shop/{id}", s.handleRequest(handler.GetShopById))
+	s.Get("/products", s.handleRequest(handler.GetProducts))
+	s.Get("/product/{id}", s.handleRequest(handler.GetProductById))
+	s.Get("/shop/{id}/products", s.handleRequest(handler.GetShopProducts))
 	//s.Get("/shop/{id}/products", s.handleRequest(handler.GetShopProducts))
 
 }
@@ -45,6 +49,9 @@ func (s *server) Put(path string, f func(w http.ResponseWriter, r *http.Request)
 }
 func (s *server) Delete(path string, f func(w http.ResponseWriter, r *http.Request)) {
 	s.Router.HandleFunc(path, f).Methods("DELETE")
+}
+func (s *server) Query(path string, key string,value string, f func(w http.ResponseWriter, r *http.Request)){
+	s.Router.HandleFunc(path,f).Queries(key,value).Methods("GET")
 }
 func (s *server) Start() {
 	log.Fatal(http.ListenAndServe(config.C().SrvAddr(), s.Router))

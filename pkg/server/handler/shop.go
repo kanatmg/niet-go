@@ -26,6 +26,9 @@ func GetShops(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		currentPage = 1
 	}
+	if page == "" {
+		currentPage = 1
+	}
 	limit := 10
 	offset := limit * (currentPage - 1)
 
@@ -72,11 +75,6 @@ func GetShopById(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(response))
-}
-
-//todo api/shops/{shop}/products ->from single shop get all products [GET]
-func GetShopProducts(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
-
 }
 
 //todo api/shop -> create single shop [POST]
