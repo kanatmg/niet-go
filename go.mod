@@ -3,7 +3,8 @@ module github.com/kanatmg/niet-go
 go 1.13
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+	github.com/badoux/checkmail v0.0.0-20181210160741-9661bd69e9ad
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gorilla/mux v1.7.4
 	github.com/jinzhu/configor v1.1.1
@@ -14,7 +15,7 @@ require (
 	github.com/mattn/go-colorable v0.1.6 // indirect
 	github.com/sirupsen/logrus v1.4.2
 	github.com/valyala/fasttemplate v1.1.0 // indirect
-	golang.org/x/crypto v0.0.0-20200302210943-78000ba7a073 // indirect
+	golang.org/x/crypto v0.0.0-20200302210943-78000ba7a073
 	golang.org/x/net v0.0.0-20200301022130-244492dfa37a
 	golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527 // indirect
 	golang.org/x/text v0.3.2 // indirect

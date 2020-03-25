@@ -1,9 +1,9 @@
 server:
-  hostname: localhost
-  port: 9299
+  hostname: 159.89.22.130 #192.168.0.108
+  port: 8080
 
 security:
-  jwtsigningkey: XXXXXX
+  jwtsigningkey: secret
   enablefaker: false
 
 database:
@@ -13,15 +13,6 @@ database:
   hostname: localhost
   port: 3306
   name: niet
-
-cors:
-  origins:
-    - chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop
-    - http://127.0.0.1:3250
-    - http://localhost:3250
-  headers:
-    - Content-Type
-    - Authorization
 
 mailing:
   accesskeyid: AKIAXXXXXX

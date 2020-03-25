@@ -4,18 +4,11 @@ import (
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
+	"github.com/kanatmg/niet-go/pkg/model"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
 )
-
-type Shop struct {
-	Id        int     `json:"id"`
-	Title     string  `json:"title"`
-	Image     string  `json:"image"`
-	Longitude float32 `json:"longitude"`
-	Lat       float32 `json:"lat"`
-}
 
 //todo api/shops -> get all shops [GET]
 func GetShops(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
@@ -33,7 +26,7 @@ func GetShops(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
 	offset := limit * (currentPage - 1)
 
 	log.Info("Shop page: ", currentPage)
-	var shops []Shop
+	var shops []model.Shop
 	err = db.Select(&shops, "select id,title,image,longitude,lat from shops limit ? offset ?", limit, offset)
 	if err != nil {
 		log.Error("Could not select shops table: %s", err)
@@ -58,7 +51,7 @@ func GetShopById(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Error("Shop id undefined", err)
 	}
-	var shop Shop
+	var shop model.Shop
 
 	err = db.Get(&shop, "select id,title,image,longitude,lat from shops where id=?", id)
 	if err != nil {

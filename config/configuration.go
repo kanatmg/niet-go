@@ -22,10 +22,7 @@ type configuration struct {
 		Port     uint   `default:"3306"`
 		Name     string `required:"true"`
 	}
-	CORS struct {
-		Origins []string ``
-		Headers []string ``
-	}
+
 	Mailing struct {
 		AccessKeyID     string `required:"true"`
 		SecretAccessKey string `required:"true"`
@@ -45,7 +42,7 @@ func (config configuration) SrvAddr() string {
 }
 
 func (config configuration) DSN() (dsn string) {
-	db := config.Database //root:root@tcp(localhost:3306)/story myuser:mypasswd@tcp(127.0.0.1:3306)/mydb
+	db := config.Database
 	dsn = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", db.User, db.Password, db.Hostname, db.Port, db.Name)
 	return
 }

@@ -1,10 +1,5 @@
 package handler
 
-type User struct {
-	Id   int
-	Name string
-}
-
 //func getUsers(db *sqlx.DB) (error, echo.HandlerFunc) {
 //	db.Select(&user, "select id,name from users")
 //	fmt.Println("users...")
