@@ -10,7 +10,10 @@ func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		err := TokenValid(r)
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
-			w.Write([]byte("Unauthorized"))
+			_, err := w.Write([]byte("Unauthorized"))
+			if err != nil {
+				log.Error("Cannot write bytes in auth response")
+			}
 			log.Warn("Unauthorized")
 			return
 		}

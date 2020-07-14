@@ -1,6 +1,7 @@
 package server
 
 import (
+	"crypto/tls"
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
 	"github.com/kanatmg/niet-go/config"
@@ -9,6 +10,7 @@ import (
 	"github.com/kanatmg/niet-go/pkg/middleware"
 	"github.com/kanatmg/niet-go/pkg/server/handler"
 	log "github.com/sirupsen/logrus"
+	"golang.org/x/crypto/acme/autocert"
 	"net/http"
 )
 
@@ -29,6 +31,7 @@ func (s *server) Initialize() {
 func (s *server) setRouters() {
 	s.Get("/shops", middleware.AuthMiddleware(s.handleRequest(handler.GetShops)))
 	s.Post("/login", s.handleRequest(handler.Login))
+	s.Post("/payment/charge", s.handleRequest(handler.Charge))
 	s.Query("/shops", "page", "{page}", middleware.AuthMiddleware(s.handleRequest(handler.GetShops)))
 	//s.Router.HandleFunc("/shops", s.handleRequest(handler.GetShops)).
 	//	Queries("page", "{page}").Methods("GET")
@@ -56,7 +59,21 @@ func (s *server) Query(path string, key string, value string, f func(w http.Resp
 	s.Router.HandleFunc(path, f).Queries(key, value).Methods("GET")
 }
 func (s *server) Start() {
-	log.Fatal(http.ListenAndServe(config.C().SrvAddr(), s.Router))
+	certManager := autocert.Manager{
+		Prompt:     autocert.AcceptTOS,
+		HostPolicy: autocert.HostWhitelist(config.C().Server.Domain),
+		Cache:      autocert.DirCache(config.C().Ssl.CertDir),
+	}
+	server := &http.Server{
+		Addr:    config.C().Ssl.Port,
+		Handler: s.Router,
+		TLSConfig: &tls.Config{
+			GetCertificate: certManager.GetCertificate,
+		},
+	}
+	go http.ListenAndServe(config.C().SrvAddr(), certManager.HTTPHandler(nil))
+	log.Fatal(server.ListenAndServeTLS("", ""))
+	//log.Fatal(http.ListenAndServe(config.C().SrvAddr(), s.Router))
 }
 func (s *server) handleRequest(handler RequestHandlerFunction) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {

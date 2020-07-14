@@ -8,11 +8,11 @@ type configuration struct {
 	Server struct {
 		Hostname string `required:"true"`
 		Port     uint   `required:"true"`
+		Domain   string `required:"true"`
 	}
 	Security struct {
 		JWTSigningKey string `required:"true"`
-
-		EnableFaker bool ``
+		EnableFaker   bool   ``
 	}
 	Database struct {
 		Type     string `default:"mysql"`
@@ -34,6 +34,10 @@ type configuration struct {
 
 		WorkerCount     byte `default:"2"`
 		WorkerQueueSize uint `default:"255"`
+	}
+	Ssl struct {
+		Port    string `default:":443"`
+		CertDir string `default:"certs"`
 	}
 }
 

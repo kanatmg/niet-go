@@ -10,7 +10,7 @@ import (
 func ConnectDB() *sqlx.DB {
 	db, err := sqlx.Connect(config.C().Database.Type, config.C().DSN())
 	if err != nil {
-		log.Error("Could not connect database: %s", err)
+		log.Error("Could not connect database: ", err)
 		log.Fatal(err)
 	}
 	//defer db.Close()

@@ -26,7 +26,7 @@ func GetProducts(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
 	var products []model.Product
 	err = db.Select(&products, "select id,title,price,full_price,image,count,shop_id from products limit ? offset ?", limit, offset)
 	if err != nil {
-		log.Error("Could not select shops table: %s", err)
+		log.Error("Could not select shops table: ", err)
 	}
 	log.Info("products...")
 	log.Info(products)
@@ -52,7 +52,7 @@ func GetProductById(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
 
 	err = db.Get(&product, "select id,title,price,full_price,image,count,shop_id from products where id=?", id)
 	if err != nil {
-		log.Error("Could not get product: %s", err)
+		log.Error("Could not get product: ", err)
 	}
 	log.Info("product ->")
 	log.Info(product)

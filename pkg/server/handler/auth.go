@@ -16,7 +16,10 @@ func Login(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("invalid username and/or password have been provided"))
+		_, err := w.Write([]byte("invalid username and/or password have been provided"))
+		if err != nil {
+			log.Error("Cannot write login response")
+		}
 		log.WithFields(log.Fields{"err": err}).Warn("invalid username and/or password have been provided")
 		return
 	}
@@ -38,7 +41,10 @@ func Login(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
 	fmt.Println(user)
 	if !usr.VerifyPassword(user.Password) {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("invalid username and/or password have been provided"))
+		_, err := w.Write([]byte("invalid username and/or password have been provided"))
+		if err != nil {
+			log.Error("Cannot write login response")
+		}
 		log.WithFields(log.Fields{"err": err}).Warn("invalid username and/or password have been provided")
 		return
 	}
