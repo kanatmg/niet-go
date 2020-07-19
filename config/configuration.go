@@ -10,10 +10,12 @@ type configuration struct {
 		Port     uint   `required:"true"`
 		Domain   string `required:"true"`
 	}
+
 	Security struct {
 		JWTSigningKey string `required:"true"`
 		EnableFaker   bool   ``
 	}
+
 	Database struct {
 		Type     string `default:"mysql"`
 		User     string ``
@@ -23,18 +25,6 @@ type configuration struct {
 		Name     string `required:"true"`
 	}
 
-	Mailing struct {
-		AccessKeyID     string `required:"true"`
-		SecretAccessKey string `required:"true"`
-		AWSRegion       string `required:"true"`
-
-		FromEmail               string `required:"true"`
-		VerificationTokenLength byte   `default:"8"`
-		EnableTestMailer        bool   ``
-
-		WorkerCount     byte `default:"2"`
-		WorkerQueueSize uint `default:"255"`
-	}
 	Ssl struct {
 		Port    string `default:":443"`
 		CertDir string `default:"certs"`

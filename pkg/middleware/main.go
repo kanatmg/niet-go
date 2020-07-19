@@ -14,7 +14,7 @@ func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			if err != nil {
 				log.Error("Cannot write bytes in auth response")
 			}
-			log.Warn("Unauthorized")
+			log.Warn("Unauthorized", r.URL.Query())
 			return
 		}
 		next(w, r)

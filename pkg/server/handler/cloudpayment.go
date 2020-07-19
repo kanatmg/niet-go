@@ -11,11 +11,12 @@ import (
 	"io/ioutil"
 	"net/http"
 )
+
 const (
-	CLOUDPAYMENTS_CHARGE_URL = "https://api.cloudpayments.ru/payments/cards/charge"
-	CLOUDPAYMENTS_AUTH_URL = "https://api.cloudpayments.ru/payments/cards/auth"
+	CLOUDPAYMENTS_CHARGE_URL       = "https://api.cloudpayments.ru/payments/cards/charge"
+	CLOUDPAYMENTS_AUTH_URL         = "https://api.cloudpayments.ru/payments/cards/auth"
 	ClOUDPAYMENTS_TOKEN_CHARGE_URL = "https://api.cloudpayments.ru/payments/tokens/charge"
-	ClOUDPAYMENTS_TOKEN_AUTH_URL = "https://api.cloudpayments.ru/payments/tokens/auth"
+	ClOUDPAYMENTS_TOKEN_AUTH_URL   = "https://api.cloudpayments.ru/payments/tokens/auth"
 )
 
 // todo do validation
@@ -63,10 +64,11 @@ func Charge(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
 	//todo 3ds sec implementation
 	fmt.Println(s)
 }
+
 // todo do 2 stage payment with auth
-func Auth(db *sqlx.DB, w http.ResponseWriter, r *http.Request){
+func Auth(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
 }
 
 // todo payment with token (recrring)
-func Token(db *sqlx.DB, w http.ResponseWriter, r *http.Request){
+func Token(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
 }

@@ -19,9 +19,3 @@ database:
   port: 3306
   name: niet
 
-mailing:
-  accesskeyid: AKIAXXXXXX
-  secretaccesskey: XXXXXX
-  awsregion: eu-west-1
-  fromemail: email
-  enabletestmailer: true

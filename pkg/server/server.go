@@ -75,6 +75,7 @@ func (s *server) Start() {
 	log.Fatal(server.ListenAndServeTLS("", ""))
 	//log.Fatal(http.ListenAndServe(config.C().SrvAddr(), s.Router))
 }
+
 func (s *server) handleRequest(handler RequestHandlerFunction) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		s.log.WithFields(

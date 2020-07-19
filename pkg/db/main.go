@@ -13,6 +13,5 @@ func ConnectDB() *sqlx.DB {
 		log.Error("Could not connect database: ", err)
 		log.Fatal(err)
 	}
-	//defer db.Close()
 	return db
 }

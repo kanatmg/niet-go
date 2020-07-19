@@ -7,12 +7,15 @@ import (
 )
 
 type User struct {
-	Id       int    `json:"id"`
-	Name     string `json:"name"`
-	Surname  string `json:"surname"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	Phone    string `json:"phone"`
+	Id            int    `json:"id"`
+	Name          string `json:"name"`
+	Surname       string `json:"surname"`
+	Email         string `json:"email"`
+	EmailVerified string `json:"email_verified_at" db:"email_verified_at"`
+	Password      string `json:"password"`
+	Active        bool   `json:"active"`
+	CreatedAt     string `json:"created_at" db:"created_at"`
+	UpdatedAt     string `json:"updated_at" db:"updated_at"`
 }
 
 func (u *User) SetPassword(password string) error {
@@ -23,13 +26,6 @@ func (u *User) SetPassword(password string) error {
 	u.Password = string(hash)
 	return nil
 }
-
-//func (u *User) VerifyPassword(hashedPassword, password string) error {
-//	fmt.Println(hashedPassword)
-//	fmt.Println(password)
-//	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
-//
-//}
 
 func (u *User) VerifyPassword(password string) bool {
 	return bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password)) == nil
