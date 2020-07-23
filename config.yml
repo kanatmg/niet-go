@@ -1,7 +1,8 @@
 server:
   hostname: 192.168.0.107 #159.89.22.130 192.168.0.108
-  port: 80 #
+  port: 1717 #
   domain: www.kui.kz
+  prod: false
 
 security:
   jwtsigningkey: secret
@@ -17,5 +18,5 @@ database:
   password: 19961711subzero
   hostname: localhost
   port: 3306
-  name: niet
+  name: niet_db
 

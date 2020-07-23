@@ -7,7 +7,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/kanatmg/niet-go/config/cloudpayments"
 	"github.com/kanatmg/niet-go/pkg/model"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 )
@@ -20,7 +20,7 @@ const (
 )
 
 // todo do validation
-func Charge(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
+func Charge(db *sqlx.DB, log *logrus.Logger, w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -28,13 +28,13 @@ func Charge(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Error("Cannot write payment process response")
 		}
-		log.WithFields(log.Fields{"err": err}).Warn("invalid payment process")
+		log.WithFields(logrus.Fields{"err": err}).Warn("invalid payment process")
 		return
 	}
 	payment := model.Payment{}
 	err = json.Unmarshal(body, &payment)
 	if err != nil {
-		log.WithFields(log.Fields{"err": err}).Warn("cannot convert to model")
+		log.WithFields(logrus.Fields{"err": err}).Warn("cannot convert to model")
 		return
 	}
 

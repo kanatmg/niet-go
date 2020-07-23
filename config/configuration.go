@@ -9,6 +9,7 @@ type configuration struct {
 		Hostname string `required:"true"`
 		Port     uint   `required:"true"`
 		Domain   string `required:"true"`
+		Prod     bool
 	}
 
 	Security struct {

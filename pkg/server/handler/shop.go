@@ -1,73 +1,33 @@
 package handler
 
 import (
-	"encoding/json"
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
 	"github.com/kanatmg/niet-go/pkg/model"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
 )
 
-//todo api/shops -> get all shops [GET]
-func GetShops(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
+func GetShops(db *sqlx.DB, log *logrus.Logger, w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	page := vars["page"]
-	currentPage, err := strconv.Atoi(page)
-	log.Info(currentPage)
-	if err != nil {
-		currentPage = 1
-	}
-	if page == "" {
-		currentPage = 1
-	}
-	limit := 10
-	offset := limit * (currentPage - 1)
 
-	log.Info("Shop page: ", currentPage)
-	var shops []model.Shop
-	err = db.Select(&shops, "select id,title,image,longitude,lat from shops limit ? offset ?", limit, offset)
-	if err != nil {
-		log.Error("Could not select shops table: %s", err)
-	}
-	log.Info("shops...")
-	log.Info(shops)
-	response, err := json.Marshal(shops)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(response))
+	limit, offset := model.GetCurrentPage(page)
+	shops := model.GetShops(db, log, limit, offset)
+
+	respondJSON(log, w, http.StatusOK, shops)
 }
 
-//todo api/shops/{shop} -> get single shop [GET]
-func GetShopById(db *sqlx.DB, w http.ResponseWriter, r *http.Request) {
+func GetShopById(db *sqlx.DB, log *logrus.Logger, w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
 		log.Error("Shop id undefined", err)
 	}
-	var shop model.Shop
 
-	err = db.Get(&shop, "select id,title,image,longitude,lat from shops where id=?", id)
-	if err != nil {
-		log.Error("Could not get shop: %s", err)
-	}
-	log.Info("shop ->")
-	log.Info(shop)
-	response, err := json.Marshal(shop)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(response))
+	shop := model.GetShopById(db, log, id)
+	respondJSON(log, w, http.StatusOK, shop)
 }
 
 //todo api/shop -> create single shop [POST]
